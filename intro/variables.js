@@ -1,6 +1,7 @@
-const trabalhando = true;
+console.log(trabalhando); // HOISTING
+var trabalhando = true;
 const nome = null;
-const abc;
+const abc = 123;
 
 const aluno = {
   nome: '"Keven"',
@@ -29,7 +30,7 @@ let y = 4;
 
 x = 6;
 
-const aluno1 = "keven\n123" + aluno2 + aluno3;
+const aluno1 = "keven\n123";
 const aluno2 = "leone";
 const aluno3 = `${aluno1} ${aluno2} testando 123.... ${x}`;
 
