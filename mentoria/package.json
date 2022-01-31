@@ -1,0 +1,11 @@
+{
+  "name": "mentoria",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.25.0",
+    "request": "^2.88.2",
+    "request-promise": "^4.2.6"
+  }
+}
