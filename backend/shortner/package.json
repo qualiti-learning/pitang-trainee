@@ -1,0 +1,20 @@
+{
+  "author": "Keven Leone",
+  "description": "Encurtador de links...",
+  "license": "ISC",
+  "main": "index.js",
+  "name": "shortner",
+  "type": "module",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon index.js",
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "^4.17.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
