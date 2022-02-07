@@ -42,17 +42,36 @@ app.post("/api/user", (request, response) => {
 });
 
 app.put("/api/user/:id", (request, response) => {
-  // Retornar o usuário atualizado
-  // Caso o usuário não exista, exibir status 404 e por uma message
+  const { id } = request.params;
+  const { email, name } = request.body;
 
-  response.send("Hello PUT");
+  const userIndex = users.findIndex((user) => user.id === id);
+
+  if (userIndex === -1) {
+    return response.status(404).send({ message: "User not found" });
+  }
+
+  users[userIndex] = {
+    id,
+    name,
+    email,
+  };
+
+  response.send({ user: users[userIndex] });
 });
 
 app.delete("/api/user/:id", (request, response) => {
-  // Retornar status 200 caso o usuário seja removido
-  // Retornar status 404 caso o usuário nao existe
+  const { id } = request.params;
 
-  response.send("Hello DELETE");
+  const userIndex = users.findIndex((user) => user.id === id);
+
+  if (userIndex === -1) {
+    return response.status(404).send({ message: "User not found" });
+  }
+
+  users.splice(userIndex, 1);
+
+  response.send({ message: "User deleted" });
 });
 
 app.listen(3000, () => {
