@@ -1264,6 +1264,11 @@ url-parse-lax@^3.0.0:
   dependencies:
     prepend-http "^2.0.0"
 
+user-agent@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/user-agent/-/user-agent-1.0.4.tgz#61201431fc7e84ea4a5e1e76392f163a1539c9a4"
+  integrity sha1-YSAUMfx+hOpKXh52OS8WOhU5yaQ=
+
 utils-merge@1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/utils-merge/-/utils-merge-1.0.1.tgz#9f95710f50a267947b2ccc124741c1028427e713"
