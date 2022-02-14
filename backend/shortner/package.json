@@ -9,11 +9,12 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon src/index.js",
-    "start": "node index.js"
+    "start": "node src/index.js"
   },
   "dependencies": {
     "dotenv": "^16.0.0",
     "express": "^4.17.2",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.2.1",
     "morgan": "^1.10.0",
     "user-agent": "^1.0.4"
