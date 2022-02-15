@@ -26,7 +26,7 @@ app.use(express.json());
 
 app.use(morgan("dev"));
 
-app.use(UserRouter);
+app.use("/api", UserRouter);
 app.use(ShortnerRouter);
 
 app.listen(PORT, () => {

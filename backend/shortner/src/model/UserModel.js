@@ -1,13 +1,16 @@
-import crypto from "crypto";
+import mongoose from "mongoose";
 
-// Usar Model do mongoose para usuário:
-
-// Name, Email, Role: Administrator / User, Password, Created At, Modified At, Phones: 123, 123
-
-export const users = [
+const UserSchema = new mongoose.Schema(
   {
-    id: crypto.randomUUID(),
-    name: "Keven Leone",
-    email: "keven123@hotmail.com",
+    email: { type: String, required: true },
+    name: { type: String, required: true },
+    password: { type: String, required: true },
+    phones: [String],
+    role: { type: String, enum: ["Administrator", "User"], default: "User" },
   },
-];
+  { timestamps: true }
+);
+
+const UserModel = mongoose.model("user", UserSchema);
+
+export default UserModel;

@@ -1,61 +1,59 @@
-import crypto from "crypto";
+import UserModel from "../model/UserModel.js";
 
-import { users } from "../model/UserModel.js";
+class UserController {
+  async index(request, response) {
+    const users = await UserModel.find().lean();
 
-const Controller = {
-  index: (request, response) => {
     response.send(users);
-  },
-  getOne: (request, response) => {
+  }
+  async getOne(request, response) {
     const id = request.params.id;
 
-    const user = users.find((user) => user.id === id);
+    const user = await UserModel.findById(id);
 
     if (user) {
-      return response.send({ user });
+      return response.send(user);
     }
 
     response.status(404).send({ message: "User not exist" });
-  },
-  store: (request, response) => {
-    const { email, name } = request.body;
-    const user = { email, name, id: crypto.randomUUID() };
+  }
+  async store(request, response) {
+    const { email, password, phones, name } = request.body;
 
-    users.push(user);
+    const user = await UserModel.create({ email, name, password, phones });
 
     response.send(user);
-  },
-  remove: (request, response) => {
+  }
+  async remove(request, response) {
     const { id } = request.params;
 
-    const userIndex = users.findIndex((user) => user.id === id);
+    const user = await UserModel.findById(id);
 
-    if (userIndex === -1) {
-      return response.status(404).send({ message: "User not found" });
+    if (user) {
+      await user.remove();
+
+      response.send({ message: "User deleted" });
     }
 
-    users.splice(userIndex, 1);
-
-    response.send({ message: "User deleted" });
-  },
-  update: (request, response) => {
+    return response.status(404).send({ message: "User not found" });
+  }
+  async update(request, response) {
     const { id } = request.params;
-    const { email, name } = request.body;
+    const { email, name, password, phones } = request.body;
 
-    const userIndex = users.findIndex((user) => user.id === id);
-
-    if (userIndex === -1) {
-      return response.status(404).send({ message: "User not found" });
-    }
-
-    users[userIndex] = {
-      id,
-      name,
+    const user = await UserModel.findByIdAndUpdate(id, {
       email,
-    };
+      name,
+      password,
+      phones,
+    });
 
-    response.send({ user: users[userIndex] });
-  },
-};
+    if (!user) {
+      return response.status(404).send({ message: "User not found" });
+    }
 
-export default Controller;
+    response.send({ user });
+  }
+}
+
+export default UserController;
