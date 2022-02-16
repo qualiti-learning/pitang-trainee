@@ -1,11 +1,22 @@
-import crypto from "crypto";
+import mongoose from "mongoose";
 
-const users = [
+const UserSchema = new mongoose.Schema(
   {
-    id: crypto.randomUUID(),
-    name: "Keven",
-    city: "Recife",
+    name: { type: String, required: true },
+    email: { type: String, required: true },
+    state: {
+      type: String,
+      enum: ["PE", "AL", "PA", "Other"],
+    },
+    password: String,
+    birthDate: Date,
+    phones: [String],
   },
-];
+  {
+    timestamps: true,
+  }
+);
 
-export default users;
+const UserModel = mongoose.model("user", UserSchema);
+
+export default UserModel;

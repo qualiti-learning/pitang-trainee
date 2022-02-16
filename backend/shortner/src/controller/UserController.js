@@ -1,65 +1,88 @@
-import crypto from "crypto";
+import UserModel from "../model/UserModel.js";
+import bcryptjs from "bcryptjs";
 
-import users from "../model/UserModel.js";
+const hashPassword = (password) => {
+  const salt = bcryptjs.genSaltSync(10);
+  const hash = bcryptjs.hashSync(password, salt);
 
-const Controller = {
-  getOne(request, response) {
+  return hash;
+};
+
+class UserController {
+  async getOne(request, response) {
     const id = request.params.id;
-    const user = users.find((user) => user.id === id);
+
+    try {
+      const user = await UserModel.findById(id);
+
+      if (user) {
+        return response.send(user);
+      }
+
+      response.status(404).send({ message: "User not found" });
+    } catch (error) {
+      console.error(error.message);
+
+      response.status(400).send({ message: "An unexpected error happened" });
+    }
+  }
+
+  async index(request, response) {
+    const users = await UserModel.find();
+
+    response.send(users);
+  }
+
+  async remove(request, response) {
+    const id = request.params.id;
+
+    const user = await UserModel.findById(id);
 
     if (user) {
-      return response.send(user);
-    }
-
-    response.status(404).send({ message: "User not found" });
-  },
-  index(request, response) {
-    response.send({ users });
-  },
-  remove(request, response) {
-    const id = request.params.id;
-    const userIndex = users.findIndex((user) => user.id === id);
-
-    if (userIndex !== -1) {
-      users.splice(userIndex, 1);
+      await user.remove();
 
       return response.send({ message: "User removed" });
     }
 
     response.status(404).send({ message: "User not found" });
-  },
-  store(request, response) {
-    const name = request.body.name;
-    const city = request.body.city;
+  }
 
-    if (name && city) {
-      const user = {
-        id: crypto.randomUUID(),
-        name,
-        city,
-      };
+  async store(request, response) {
+    const { name, phones, email, password, birthDate, state } = request.body;
 
-      users.push(user);
+    const user = await UserModel.create({
+      name,
+      phones,
+      email,
+      password: hashPassword(password),
+      birthDate,
+      state,
+    });
 
-      return response.send({ message: "Usuário criado!", user });
-    }
+    response.send({ message: "User Created!", user });
+  }
 
-    response.status(400).send({ message: "data invalid" });
-  },
-  update(request, response) {
+  async update(request, response) {
     const id = request.params.id;
-    const { name, city } = request.body;
+    const { name, phones, email, password, birthDate, state } = request.body;
 
-    const userIndex = users.findIndex((user) => user.id === id);
+    const user = await UserModel.findByIdAndUpdate(
+      id,
+      {
+        name,
+        phones,
+        email,
+        password: hashPassword(password),
+        birthDate,
+        state,
+      },
+      {
+        new: true,
+      }
+    );
 
-    if (userIndex !== -1) {
-      users[userIndex] = { id, name, city };
+    response.send(user);
+  }
+}
 
-      return response.send({ user: users[userIndex] });
-    }
-
-    response.status(404).send({ message: "User not found" });
-  },
-};
-
-export default Controller;
+export default UserController;
