@@ -3,6 +3,7 @@ import morgan from "morgan";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
 
+import {AuthMiddleware} from "./middlewares/auth.middleware.js";
 import UserRouter from "./routes/UserRouter.js";
 import ShortnerRouter from "./routes/ShortnerRouter.js";
 
@@ -26,6 +27,7 @@ app.use(express.json());
 
 app.use(morgan("dev"));
 
+app.use(AuthMiddleware)
 app.use("/api", UserRouter);
 app.use(ShortnerRouter);
 

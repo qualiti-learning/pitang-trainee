@@ -4,6 +4,7 @@ const ShortnerSchema = mongoose.Schema(
   {
     expired: { type: Boolean, default: false },
     expiredDate: Date,
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'user' },
     hash: { type: String, required: true },
     hits: { type: Number, default: 0 },
     link: { type: String, required: true },
