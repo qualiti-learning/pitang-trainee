@@ -6,7 +6,7 @@ class ShortnerController {
   async index(request, response) {
     const shortners = await ShortnerModel.find({ user: request.loggedUser._id }).lean();
 
-    response.json({ shortners });
+    response.json(shortners);
   }
 
   async store(request, response) {
@@ -21,7 +21,7 @@ class ShortnerController {
       expiredDate,
     });
 
-    response.json({ shortner });
+    response.json(shortner);
   }
 
   async update(request, response) {
@@ -38,7 +38,7 @@ class ShortnerController {
       { new: true }
     );
 
-    response.json({ shortner });
+    response.json(shortner);
   }
 
   async remove(request, response) {
