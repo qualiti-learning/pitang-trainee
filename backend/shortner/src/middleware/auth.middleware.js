@@ -1,4 +1,7 @@
 import jsonwebtoken from 'jsonwebtoken';
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const JWT_SECRET = process.env.JWT_SECRET;
 
@@ -16,9 +19,7 @@ export const AuthMiddleware = (request, response, next) => {
     const [, token] = authorization.split(" ");
 
     try {
-        const user = jsonwebtoken.verify(token, JWT_SECRET);
-
-        console.log(user)
+        jsonwebtoken.verify(token, JWT_SECRET);
     } catch (error) {
         return response.status(401).json({ message: "Token Invalid" });
     }

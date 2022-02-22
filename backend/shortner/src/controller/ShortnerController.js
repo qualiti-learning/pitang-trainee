@@ -1,5 +1,7 @@
 class ShortnerController {
     getOne(request, response) {
+        // Verificar se o shortner existe
+
         response.json({ message: "Ok!" })
     }
 
@@ -8,6 +10,8 @@ class ShortnerController {
     }
 
     remove(request, response) {
+        // Verificar se o shortner existe
+
         response.json({ message: "Ok!" })
     }
 
@@ -16,7 +20,19 @@ class ShortnerController {
     }
 
     update(request, response) {
+        // Verificar se o shortner existe
+
         response.json({ message: "Ok!" })
+    }
+
+    redirect(request, response) {
+        // buscar o shortner a partir do hash
+
+        // pegar o link original e redirecionar
+
+        // adicionar hits +1
+
+        response.redirect("https://google.com")
     }
 }
 
