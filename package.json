@@ -1,13 +1,17 @@
 {
   "name": "pitang-trainee",
   "version": "1.0.0",
+  "private": true,
   "main": "index.js",
   "repository": "https://github.com/qualiti-learning/pitang-trainee",
   "author": "Keven Leone <keven.santos.sz@gmail.com>",
   "license": "MIT",
+  "devDependencies": {
+    "@monorepo/eslint-config-node": "*"
+  },
   "workspaces": {
     "packages": [
-      "packages/**"
+      "packages/*"
     ]
   }
 }
