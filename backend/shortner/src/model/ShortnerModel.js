@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const ShortnerSchema = new mongoose.Schema({
     link: { type: String, required: true },
-    hash: { type: String, required: true },
+    hash: { type: String, required: true, unique: true },
     hits: { type: Number, default: 0 },
     metadata: [
         mongoose.SchemaTypes.Mixed

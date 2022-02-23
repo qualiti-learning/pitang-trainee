@@ -1,38 +1,103 @@
+import crypto from 'crypto';
+
+import ShortnerModel from '../model/ShortnerModel.js'
+
 class ShortnerController {
-    getOne(request, response) {
-        // Verificar se o shortner existe
+    async getOne(request, response) {
+        const { id } = request.params;
 
-        response.json({ message: "Ok!" })
+        try {
+            const shortner = await ShortnerModel.findById(id);
+
+            if (!shortner) {
+                return response.status(404).json({ message: "Shortner not found" })
+            }
+
+            response.json(shortner)
+        } catch (error) {
+            console.error(error);
+
+            response.status(400).json({ message: "An unexpected error happened" });
+        }
     }
 
-    index(request, response) {
-        response.json({ message: "Ok!" })
+    async index(request, response) {
+        const shortners = await ShortnerModel.find();
+
+        response.json({ items: shortners })
     }
 
-    remove(request, response) {
-        // Verificar se o shortner existe
+    async remove(request, response) {
+        const { id } = request.params;
 
-        response.json({ message: "Ok!" })
+        try {
+            const shortner = await ShortnerModel.findById(id);
+
+            if (!shortner) {
+                return response.status(404).json({ message: "Shortner not found" })
+            }
+
+            await shortner.remove();
+
+            response.json({message: "Shortner removed"});
+        } catch (error) {
+            console.error(error);
+
+            response.status(400).json({ message: "An unexpected error happened" });
+        }
     }
 
-    store(request, response) {
-        response.json({ message: "Ok!" })
+    async store(request, response) {
+        const { link = '' } = request.body;
+
+        if (!link.trim()) {
+            return response.status(400).json({ message: "Link is missing" })
+        }
+
+        const [hash] = crypto.randomUUID().split("-");
+
+        const shortner = await ShortnerModel.create({
+            link,
+            hash,
+            ownerId: request.loggedUser.id
+        });
+
+        response.json({ message: "Shortner Created", shortner })
     }
 
-    update(request, response) {
-        // Verificar se o shortner existe
+    async update(request, response) {
+        const { link = '' } = request.body;
+        const { id } = request.params;
 
-        response.json({ message: "Ok!" })
+        try {
+            const shortner = await ShortnerModel.findByIdAndUpdate(id, { link }, { new: true });
+
+            if (!shortner) {
+                return response.status(404).json({ message: "Shortner not found" })
+            }
+
+            response.json(shortner)
+        } catch (error) {
+            console.error(error);
+
+            response.status(400).json({ message: "An unexpected error happened" });
+        }
     }
 
-    redirect(request, response) {
-        // buscar o shortner a partir do hash
+   static async redirect(request, response) {
+        const {hash} = request.params;
 
-        // pegar o link original e redirecionar
+        const shortner = await ShortnerModel.findOne({ hash });
 
-        // adicionar hits +1
+        if (!shortner) {
+            return response.redirect("/")
+        }
 
-        response.redirect("https://google.com")
+        shortner.hits += 1;
+
+        await shortner.save();
+
+        response.redirect(shortner.link);
     }
 }
 
