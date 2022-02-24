@@ -1,4 +1,5 @@
 import crypto from 'crypto';
+import parser from 'ua-parser-js';
 
 import ShortnerModel from '../model/ShortnerModel.js'
 
@@ -93,7 +94,13 @@ class ShortnerController {
             return response.redirect("/")
         }
 
+        const metadata = {
+            ip: request.ip,
+            parser: parser(request.headers['user-agent']),
+        }
+
         shortner.hits += 1;
+        shortner.metadata = [...shortner.metadata, metadata]
 
         await shortner.save();
 

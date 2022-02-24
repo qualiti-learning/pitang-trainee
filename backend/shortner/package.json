@@ -17,7 +17,8 @@
     "express": "^4.17.2",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.2.1",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "ua-parser-js": "^1.0.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"
