@@ -1,0 +1,57 @@
+{"level":"info","message":"Listening PORT: 3000","timestamp":"2022-03-07T22:43:40.209Z"}
+{"level":"info","message":"Listening PORT: 3000","timestamp":"2022-03-07T22:44:57.403Z"}
+{"level":"http","message":"GET / 304 6.068 ms - -","timestamp":"2022-03-07T22:45:03.461Z"}
+{"level":"http","message":"GET /favicon.ico 404 2.521 ms - 150","timestamp":"2022-03-07T22:45:03.764Z"}
+{"level":"info","message":"Listening PORT: 3000","timestamp":"2022-03-08T00:27:37.091Z"}
+{"level":"http","message":"GET /api/session 200 85.159 ms - 486","timestamp":"2022-03-08T00:27:54.851Z"}
+{"level":"info","message":"Listening PORT: 3000","timestamp":"2022-03-08T00:28:18.267Z"}
+{"level":"info","message":"Listening PORT: 3000","timestamp":"2022-03-08T00:28:19.864Z"}
+{"level":"http","message":"POST /api/session 200 7.149 ms - 3665","timestamp":"2022-03-08T00:28:22.476Z"}
+{"level":"info","message":"Listening PORT: 3000","timestamp":"2022-03-08T00:31:41.496Z"}
+{"level":"info","message":"Listening PORT: 3000","timestamp":"2022-03-08T00:32:00.639Z"}
+{"level":"info","message":"Listening PORT: 3000","timestamp":"2022-03-08T00:32:06.231Z"}
+{"level":"info","message":"Listening PORT: 3000","timestamp":"2022-03-08T00:34:25.441Z"}
+{"level":"info","message":"Listening PORT: 3000","timestamp":"2022-03-08T00:34:34.443Z"}
+{"level":"info","message":"Listening PORT: 3000","timestamp":"2022-03-08T00:34:59.569Z"}
+{"level":"info","message":"Listening PORT: 3000","timestamp":"2022-03-08T00:35:09.525Z"}
+{"level":"info","message":"Listening PORT: 3000","timestamp":"2022-03-08T00:35:27.144Z"}
+{"level":"info","message":"Listening PORT: 3000","timestamp":"2022-03-08T00:36:32.961Z"}
+{"level":"info","message":"Listening PORT: 3000","timestamp":"2022-03-08T00:36:35.969Z"}
+{"level":"http","message":"POST /api/session 500 4.308 ms - 1559","timestamp":"2022-03-08T00:37:58.744Z"}
+{"level":"info","message":"Listening PORT: 3000","timestamp":"2022-03-08T00:38:08.636Z"}
+{"level":"info","message":"Listening PORT: 3000","timestamp":"2022-03-08T00:39:23.577Z"}
+{"level":"http","message":"POST /api/session 200 123.331 ms - 161","timestamp":"2022-03-08T00:39:24.772Z"}
+{"level":"http","message":"GET /api/session 200 3.903 ms - 648","timestamp":"2022-03-08T00:39:35.904Z"}
+{"level":"info","message":"Listening PORT: 3000","timestamp":"2022-03-08T00:40:54.823Z"}
+{"level":"info","message":"Listening PORT: 3000","timestamp":"2022-03-08T00:44:27.002Z"}
+{"level":"http","message":"POST /api/session 200 144.607 ms - 161","timestamp":"2022-03-08T00:44:32.343Z"}
+{"level":"http","message":"POST /api/session 200 17.486 ms - 161","timestamp":"2022-03-08T00:46:11.583Z"}
+{"level":"http","message":"GET /api/session 200 5.138 ms - 972","timestamp":"2022-03-08T00:47:13.903Z"}
+{"level":"info","message":"Listening PORT: 3000","timestamp":"2022-03-08T00:48:15.710Z"}
+{"level":"info","message":"Listening PORT: 3000","timestamp":"2022-03-08T00:48:25.516Z"}
+{"level":"info","message":"Listening PORT: 3000","timestamp":"2022-03-08T00:49:09.085Z"}
+{"level":"info","message":"Listening PORT: 3000","timestamp":"2022-03-08T00:49:10.678Z"}
+{"level":"info","message":"Listening PORT: 3000","timestamp":"2022-03-08T00:49:26.539Z"}
+{"level":"info","message":"Listening PORT: 3000","timestamp":"2022-03-08T00:50:10.030Z"}
+{"level":"info","message":"Listening PORT: 3000","timestamp":"2022-03-08T00:50:17.631Z"}
+{"level":"info","message":"Listening PORT: 3000","timestamp":"2022-03-08T00:50:23.588Z"}
+{"level":"info","message":"Listening PORT: 3000","timestamp":"2022-03-08T00:50:44.260Z"}
+{"level":"info","message":"Listening PORT: 3000","timestamp":"2022-03-08T00:50:55.194Z"}
+{"level":"info","message":"Listening PORT: 3000","timestamp":"2022-03-08T00:51:00.680Z"}
+{"level":"info","message":"Listening PORT: 3000","timestamp":"2022-03-08T00:51:15.700Z"}
+{"level":"info","message":"Listening PORT: 3000","timestamp":"2022-03-08T00:51:36.392Z"}
+{"level":"http","message":"GET /api/session 200 96.950 ms - 10078","timestamp":"2022-03-08T00:51:40.714Z"}
+{"level":"info","message":"Listening PORT: 3000","timestamp":"2022-03-08T00:58:14.281Z"}
+{"level":"info","message":"Listening PORT: 3000","timestamp":"2022-03-08T00:58:15.112Z"}
+{"level":"info","message":"Listening PORT: 3000","timestamp":"2022-03-08T00:58:29.798Z"}
+{"level":"info","message":"Listening PORT: 3000","timestamp":"2022-03-08T00:58:53.423Z"}
+{"level":"info","message":"Listening PORT: 3000","timestamp":"2022-03-08T00:59:05.411Z"}
+{"level":"info","message":"Listening PORT: 3000","timestamp":"2022-03-08T00:59:19.756Z"}
+{"level":"info","message":"Listening PORT: 3000","timestamp":"2022-03-08T00:59:30.781Z"}
+{"level":"info","message":"Listening PORT: 3000","timestamp":"2022-03-08T00:59:39.561Z"}
+{"level":"info","message":"Listening PORT: 3000","timestamp":"2022-03-08T00:59:56.510Z"}
+{"level":"info","message":"Listening PORT: 3000","timestamp":"2022-03-08T01:00:05.552Z"}
+{"level":"info","message":"Listening PORT: 3000","timestamp":"2022-03-08T01:00:11.641Z"}
+{"level":"info","message":"Listening PORT: 3000","timestamp":"2022-03-08T01:00:16.655Z"}
+{"level":"info","message":"Listening PORT: 3000","timestamp":"2022-03-08T01:01:46.480Z"}
+{"level":"info","message":"Listening PORT: 3000","timestamp":"2022-03-08T01:02:01.167Z"}

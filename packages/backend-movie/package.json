@@ -22,6 +22,10 @@
   },
   "scripts": {
     "dev": "nodemon src/index.js",
-    "start": "node src/index.js"
+    "start": "node src/index.js",
+    "prisma-generate": "prisma generate",
+    "prisma-migrate-dev": "prisma migrate dev",
+    "prisma-studio": "prisma studio",
+    "prisma-seed": "node prisma/seed.js"
   }
 }

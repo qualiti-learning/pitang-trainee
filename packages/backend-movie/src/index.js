@@ -15,7 +15,13 @@ const PORT = process.env.PORT || 3000
 
 app.use(express.json())
 app.use(cors())
-app.use(morgan('dev', { stream: logger.stream.write }))
+app.use(
+  morgan(":method :url :status :response-time ms - :res[content-length]", {
+    stream: {
+      write: (message) => logger.http(message.trim()),
+    },
+  })
+);
 app.use(helmet())
 app.use('/api', routes)
 

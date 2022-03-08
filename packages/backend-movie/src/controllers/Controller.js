@@ -2,9 +2,13 @@ import prismaClient from '../prisma.js'
 import logger from '../utils/logger.js'
 
 class Controller {
-  constructor (model) {
+  constructor(model, prismaOptions = {
+    findMany: {},
+  }) {
     this.model = model
+    this.prismaClient = prismaClient;
     this.client = prismaClient[model]
+    this.prismaOptions = prismaOptions;
 
     if (!this.client) {
       logger.error(`Model: ${model} not found on Prisma Schema`)
@@ -18,7 +22,7 @@ class Controller {
   * @returns
   */
 
-  async getOne (request, response) {
+  async getOne(request, response) {
     const { id } = request.params
 
     const registry = await this.client.findUnique({ where: { id } })
@@ -32,13 +36,13 @@ class Controller {
     response.json(registry)
   }
 
-  async index (request, response) {
-    const registries = await this.client.findMany()
+  async index(request, response) {
+    const registries = await this.client.findMany(this.prismaOptions.findMany)
 
     response.json(registries)
   }
 
-  async remove (request, response) {
+  async remove(request, response) {
     const { id } = request.params
 
     try {
@@ -52,7 +56,7 @@ class Controller {
     }
   }
 
-  async store (request, response) {
+  async store(request, response) {
     const registry = await this.client.create({
       data: request.body
     })
@@ -60,7 +64,7 @@ class Controller {
     response.json(registry)
   }
 
-  async update (request, response) {
+  async update(request, response) {
     const { id } = request.params
 
     try {

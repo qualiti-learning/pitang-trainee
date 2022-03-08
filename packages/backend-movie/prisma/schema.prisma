@@ -10,6 +10,18 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum UserRole {
+  ADMINISTRATOR
+  USER
+}
+
+enum TicketCategory {
+  FREE
+  HALF_PRICE
+  PROMO
+  STANDARD
+}
+
 enum SessionRoom {
   COMMON
   DLUX
@@ -23,6 +35,25 @@ enum Classification {
   RESTRICTED
 }
 
+enum SeatType {
+  DOUBLESEAT
+  STANDARD
+  WHEELCHAIR
+}
+
+model SessionSeats {
+  id        String   @id @default(uuid())
+  line      String
+  name      String
+  column    Int
+  type      SeatType @default(STANDARD)
+  state     Boolean  @default(false)
+  disabled  Boolean  @default(false)
+  Session   Session? @relation(fields: [sessionId], references: [id])
+  sessionId String?
+  Ticket    Ticket[]
+}
+
 model Movie {
   id             String          @id @default(uuid())
   name           String
@@ -33,11 +64,14 @@ model Movie {
 }
 
 model Session {
-  id          String      @id @default(uuid())
-  sessionDate DateTime
-  movie       Movie       @relation(fields: [movieId], references: [id])
-  room        SessionRoom @default(COMMON)
-  movieId     String
+  id           String         @id @default(uuid())
+  sessionDate  DateTime       @default(now())
+  movie        Movie          @relation(fields: [movieId], references: [id])
+  room         SessionRoom    @default(COMMON)
+  movieId      String
+  price        Float          @default(0)
+  Ticket       Ticket[]
+  SessionSeats SessionSeats[]
 }
 
 model User {
@@ -45,6 +79,20 @@ model User {
   email     String
   password  String
   name      String
+  role      UserRole @default(USER)
   birthDate DateTime
   reviewer  Boolean? @default(false)
+  Ticket    Ticket[]
+}
+
+model Ticket {
+  id             String         @id @default(uuid())
+  category       TicketCategory @default(STANDARD)
+  paymentStatus  Boolean        @default(false)
+  session        Session        @relation(fields: [sessionId], references: [id])
+  user           User           @relation(fields: [userId], references: [id])
+  sessionId      String
+  userId         String
+  seat           SessionSeats   @relation(fields: [sessionSeatsId], references: [id])
+  sessionSeatsId String
 }
