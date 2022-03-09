@@ -10,20 +10,101 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum Region {
-  SUL
-  SULDESTE
-  NORTE
-  NORDESTE
-  CENTROOESTE
+enum UserRole {
+  ADMINSTRATOR
+  USER
+  REVIEWER
+}
+
+enum ParentalGuidance {
+  GENERAL_AUDIENCE
+  PARENTAL_GUIDANCE_SUGGESTED
+  PARENTAL_STRONGLY_CAUTIONED
+  RESTRICTED
+}
+
+enum TicketType {
+  FREE
+  HALF_PRICE
+  PROMOTION
+  STANDARD
+}
+
+enum Room {
+  D_BOX
+  D_LUX
+  IMAX
+  STANDARD
+}
+
+enum SeatStatus {
+  AVAILABLE
+  BLOCKED
+  BUSY
+  SELECTED
+}
+
+enum SeatType {
+  OVERWEIGHT
+  REDUCED_MOBILITY
+  STANDARD
+  WHEELCHAIR
+}
+
+model SessionSeats {
+  id        String     @id @default(uuid())
+  line      String
+  column    Int
+  type      SeatType   @default(STANDARD)
+  status    SeatStatus @default(AVAILABLE)
+  Session   Session?   @relation(fields: [sessionId], references: [id])
+  sessionId String?
+}
+
+model Session {
+  id           String         @id @default(uuid())
+  sessionDate  DateTime
+  room         Room
+  caption      Boolean        @default(false)
+  movie        Movie          @relation(fields: [movieId], references: [id])
+  movieId      String
+  Ticket       Ticket[]
+  SessionSeats SessionSeats[]
+}
+
+model Movie {
+  id                String           @id @default(uuid())
+  name              String
+  description       String
+  duration          Int
+  director          String
+  parental_guidance ParentalGuidance @default(GENERAL_AUDIENCE)
+  thumbnail         String?
+  rating            Float
+  languages         String[]
+  Session           Session[]
+}
+
+model Ticket {
+  id            String     @id @default(uuid())
+  session       Session    @relation(fields: [sessionId], references: [id])
+  user          User       @relation(fields: [userId], references: [id])
+  price         Decimal    @db.Decimal(10, 2)
+  paymentStatus Boolean    @default(false)
+  type          TicketType @default(STANDARD)
+  pucharseDate  DateTime?
+  sessionId     String
+  userId        Int
 }
 
 model User {
   id        Int      @id @default(autoincrement())
+  role      UserRole @default(USER)
+  password  String
   name      String
   country   String
   email     String?
   birthDate DateTime
   phone     String?
-  region    Region
+  Ticket    Ticket[]
 }

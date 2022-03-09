@@ -2,11 +2,11 @@ import bcryptjs from "bcryptjs";
 import jsonwebtoken from "jsonwebtoken";
 import dotenv from "dotenv";
 
-dotenv.config();
-
 import UserModel from "../model/UserModel.js";
 
-const JWT_SECRET = process.env.JWT_SECRET;
+dotenv.config();
+
+const { JWT_SECRET } = process.env;
 
 const hashPassword = (password) => {
   const salt = bcryptjs.genSaltSync(10);
@@ -17,7 +17,7 @@ const hashPassword = (password) => {
 
 class UserController {
   async getOne(request, response) {
-    const id = request.params.id;
+    const { id } = request.params;
 
     try {
       const user = await UserModel.findById(id);
@@ -46,24 +46,27 @@ class UserController {
     const user = await UserModel.findOne({ email }).lean();
 
     if (!user) {
-      return response.status(404).json({ message: "User not found" })
+      return response.status(404).json({ message: "User not found" });
     }
 
     if (!bcryptjs.compareSync(password, user.password)) {
-      return response.status(404).json({ message: "Password Invalid" })
+      return response.status(404).json({ message: "Password Invalid" });
     }
 
-    const token = jsonwebtoken.sign({
-      id: user._id,
-      name: user.name,
-      email: user.email,
-    }, JWT_SECRET);
+    const token = jsonwebtoken.sign(
+      {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+      },
+      JWT_SECRET
+    );
 
-    response.json({ token })
+    response.json({ token });
   }
 
   async remove(request, response) {
-    const id = request.params.id;
+    const { id } = request.params;
 
     const user = await UserModel.findById(id);
 
@@ -92,7 +95,7 @@ class UserController {
   }
 
   async update(request, response) {
-    const id = request.params.id;
+    const { id } = request.params;
     const { name, phones, email, password, birthDate, state } = request.body;
 
     const user = await UserModel.findByIdAndUpdate(
