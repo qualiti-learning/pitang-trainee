@@ -2,11 +2,17 @@ import Controller from './Controller.js'
 import Joi from 'joi'
 
 class MovieController extends Controller {
-  constructor () {
-    super('movie')
+  constructor() {
+    super('movie', {
+      findMany: {
+        include: {
+          Session: { include: { Ticket: true } }
+        }
+      }
+    })
   }
 
-  store (request, response) {
+  store(request, response) {
     const schema = Joi.object({
       name: Joi.string().required().min(3).max(50),
       description: Joi.string().required().max(5000),

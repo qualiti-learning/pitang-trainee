@@ -26,7 +26,6 @@ enum SessionRoom {
   COMMON
   DLUX
   IMAX
-  XD
 }
 
 enum Classification {
@@ -41,15 +40,22 @@ enum SeatType {
   WHEELCHAIR
 }
 
+enum SeatStatus {
+  AVAILABLE
+  BLOCKED
+  BUSY
+  SELECTED
+}
+
 model SessionSeats {
-  id        String   @id @default(uuid())
+  id        String     @id @default(uuid())
   line      String
   name      String
   column    Int
-  type      SeatType @default(STANDARD)
-  state     Boolean  @default(false)
-  disabled  Boolean  @default(false)
-  Session   Session? @relation(fields: [sessionId], references: [id])
+  type      SeatType   @default(STANDARD)
+  state     SeatStatus @default(AVAILABLE)
+  disabled  Boolean    @default(false)
+  Session   Session?   @relation(fields: [sessionId], references: [id])
   sessionId String?
   Ticket    Ticket[]
 }
