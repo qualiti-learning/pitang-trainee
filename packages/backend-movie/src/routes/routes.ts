@@ -1,9 +1,9 @@
 import { Router } from 'express'
 
-import MovieRouter from './MovieRouter.js'
-import SessionRouter from './SessionRouter.js'
-import UserRouter from './UserRouter.js'
-import TicketRouter from './TicketRouter.js'
+import MovieRouter from './MovieRouter'
+import SessionRouter from './SessionRouter'
+import UserRouter from './UserRouter'
+import TicketRouter from './TicketRouter'
 
 const router = Router()
 

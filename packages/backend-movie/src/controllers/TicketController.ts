@@ -1,15 +1,16 @@
 import Joi from 'joi'
-import Controller from './Controller.js'
-import Prisma from '@prisma/client'
+import Controller from './Controller'
+import * as prisma from '@prisma/client'
+import { Request, Response } from 'express'
 
-const { TicketCategory } = Prisma
+const { TicketCategory } = prisma
 
 class TicketController extends Controller {
   constructor() {
     super('ticket')
   }
 
-  async store(request, response) {
+  async store(request: Request, response: Response): Promise<any> {
     const { category, seatId, sessionId } = request.body
 
     const schema = Joi.object({

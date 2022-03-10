@@ -1,3 +1,4 @@
 **/**/node_modules
 **/**/.env
 packages/**/log
+packages/**/dist

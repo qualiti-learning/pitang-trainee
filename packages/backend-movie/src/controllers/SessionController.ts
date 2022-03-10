@@ -1,8 +1,10 @@
-import Prisma from '@prisma/client';
-import Joi from 'joi';
-import Controller from './Controller.js'
 
-const { SessionRoom, SeatType, SeatStatus } = Prisma;
+import { Request, Response } from 'express'
+import * as prisma from '@prisma/client'
+import Joi from 'joi';
+import Controller from './Controller'
+
+const { SessionRoom, SeatType, SeatStatus } = prisma;
 
 const schema = Joi.object({
   room: Joi.string().required().valid(...Object.values(SessionRoom)),
@@ -46,7 +48,7 @@ class SessionController extends Controller {
     })
   }
 
-  store(request, response) {
+  async store(request: Request, response: Response): Promise<any> {
     const { room, sessionDate, price, movieId } = request.body;
 
     const validation = schema.validate({ room, sessionDate, price, movieId })
@@ -70,7 +72,7 @@ class SessionController extends Controller {
     super.store(request, response)
   }
 
-  update(request, response) {
+  async update(request: Request, response: Response): Promise<any> {
     const { room, sessionDate, price, movieId } = request.body;
 
     const validation = schema.validate({ room, sessionDate, price, movieId })
@@ -89,7 +91,7 @@ class SessionController extends Controller {
     super.update(request, response)
   }
 
-  async updateSeat(request, response) {
+  async updateSeat(request: Request, response: Response): Promise<any> {
     const { sessionId, seatId } = request.params;
     const { disabled, state, type } = request.body;
 

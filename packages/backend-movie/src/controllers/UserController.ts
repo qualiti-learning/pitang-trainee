@@ -1,7 +1,7 @@
-import Controller from './Controller.js'
+import Controller from './Controller'
 
 class UserController extends Controller {
-  constructor () {
+  constructor() {
     super('user')
   }
 

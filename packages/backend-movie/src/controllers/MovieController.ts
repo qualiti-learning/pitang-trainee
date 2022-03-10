@@ -1,4 +1,5 @@
-import Controller from './Controller.js'
+import { Request, Response } from 'express'
+import Controller from './Controller'
 import Joi from 'joi'
 
 class MovieController extends Controller {
@@ -12,7 +13,7 @@ class MovieController extends Controller {
     })
   }
 
-  store(request, response) {
+  async store(request: Request, response: Response): Promise<any> {
     const schema = Joi.object({
       name: Joi.string().required().min(3).max(50),
       description: Joi.string().required().max(5000),

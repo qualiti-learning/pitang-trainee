@@ -1,8 +1,17 @@
-import prismaClient from '../prisma.js'
-import logger from '../utils/logger.js'
+import { Request, Response } from 'express'
+import { PrismaClient } from '@prisma/client';
+import prismaClient from '../prisma'
+import logger from '../utils/logger'
 
 class Controller {
-  constructor (model, prismaOptions = {
+  public model: string;
+  public prismaClient: PrismaClient;
+  public client: any;
+  public prismaOptions: {
+    findMany: any,
+  }
+
+  constructor(model: string, prismaOptions = {
     findMany: {}
   }) {
     this.model = model
@@ -22,7 +31,7 @@ class Controller {
   * @returns
   */
 
-  async getOne (request, response) {
+  async getOne(request: Request, response: Response) {
     const { id } = request.params
 
     const registry = await this.client.findUnique({ where: { id } })
@@ -36,13 +45,13 @@ class Controller {
     response.json(registry)
   }
 
-  async index (request, response) {
+  async index(request: Request, response: Response) {
     const registries = await this.client.findMany(this.prismaOptions.findMany)
 
     response.json(registries)
   }
 
-  async remove (request, response) {
+  async remove(request: Request, response: Response) {
     const { id } = request.params
 
     try {
@@ -56,21 +65,21 @@ class Controller {
     }
   }
 
-  async store (request, response) {
+  async store(request: Request, response: Response) {
     try {
       const registry = await this.client.create({
         data: request.body
       })
 
       response.json(registry)
-    } catch (error) {
+    } catch (error: any) {
       logger.error(error.message)
 
       response.status(400).json({ message: 'Fail to store entity: ' + this.model })
     }
   }
 
-  async update (request, response) {
+  async update(request: Request, response: Response) {
     const { id } = request.params
 
     try {

@@ -1,11 +1,11 @@
 import cors from 'cors'
 import dotenv from 'dotenv'
-import express from 'express'
+import express, { response } from 'express'
 import helmet from 'helmet'
 import morgan from 'morgan'
 
-import logger from './utils/logger.js'
-import routes from './routes/routes.js'
+import logger from './utils/logger'
+import routes from './routes/routes'
 
 dotenv.config()
 
