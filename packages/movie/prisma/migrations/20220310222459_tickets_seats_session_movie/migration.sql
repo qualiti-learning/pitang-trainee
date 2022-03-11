@@ -1,10 +1,3 @@
-/*
-  Warnings:
-
-  - You are about to drop the column `region` on the `User` table. All the data in the column will be lost.
-  - Added the required column `password` to the `User` table without a default value. This is not possible if the table is not empty.
-
-*/
 -- CreateEnum
 CREATE TYPE "UserRole" AS ENUM ('ADMINSTRATOR', 'USER', 'REVIEWER');
 
@@ -22,14 +15,6 @@ CREATE TYPE "SeatStatus" AS ENUM ('AVAILABLE', 'BLOCKED', 'BUSY', 'SELECTED');
 
 -- CreateEnum
 CREATE TYPE "SeatType" AS ENUM ('OVERWEIGHT', 'REDUCED_MOBILITY', 'STANDARD', 'WHEELCHAIR');
-
--- AlterTable
-ALTER TABLE "User" DROP COLUMN "region",
-ADD COLUMN     "password" TEXT NOT NULL,
-ADD COLUMN     "role" "UserRole" NOT NULL DEFAULT E'USER';
-
--- DropEnum
-DROP TYPE "Region";
 
 -- CreateTable
 CREATE TABLE "SessionSeats" (
@@ -80,6 +65,20 @@ CREATE TABLE "Ticket" (
     "userId" INTEGER NOT NULL,
 
     CONSTRAINT "Ticket_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "User" (
+    "id" SERIAL NOT NULL,
+    "role" "UserRole" NOT NULL DEFAULT E'USER',
+    "password" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "country" TEXT NOT NULL,
+    "email" TEXT,
+    "birthDate" TIMESTAMP(3) NOT NULL,
+    "phone" TEXT,
+
+    CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
 
 -- AddForeignKey

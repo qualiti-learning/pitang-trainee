@@ -92,7 +92,7 @@ model Ticket {
   price         Decimal    @db.Decimal(10, 2)
   paymentStatus Boolean    @default(false)
   type          TicketType @default(STANDARD)
-  pucharseDate  DateTime?
+  pucharseDate  DateTime?  @default(now())
   sessionId     String
   userId        Int
 }

@@ -1,9 +1,9 @@
-import Controller from "./Controller.js";
+import Controller from './Controller.js'
 
 class UserController extends Controller {
   constructor() {
-    super("user");
+    super({ entity: 'user' })
   }
 }
 
-export default UserController;
+export default UserController
