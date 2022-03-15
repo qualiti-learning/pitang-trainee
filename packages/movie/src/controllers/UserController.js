@@ -1,7 +1,7 @@
 import Controller from './Controller.js'
 
 class UserController extends Controller {
-  constructor() {
+  constructor () {
     super({ entity: 'user' })
   }
 }

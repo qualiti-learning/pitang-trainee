@@ -1,7 +1,3 @@
-/* eslint-disable camelcase */
-/* eslint-disable consistent-return */
-/* eslint-disable class-methods-use-this */
-
 import prisma from '@prisma/client'
 import Joi from 'joi'
 import Controller from './Controller.js'
@@ -22,7 +18,7 @@ const schema = Joi.object({
 })
 
 class MovieController extends Controller {
-  constructor() {
+  constructor () {
     super({ entity: 'movie', validationSchema: schema })
   }
 }

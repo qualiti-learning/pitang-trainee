@@ -1,26 +1,27 @@
-import cors from "cors";
-import dotenv from "dotenv";
-import express from "express";
-import helmet from "helmet";
-import morgan from "morgan";
-import router from "./routes/index.js";
+import cors from 'cors'
+import dotenv from 'dotenv'
+import express from 'express'
+import helmet from 'helmet'
+import morgan from 'morgan'
 
-dotenv.config();
+import router from './routes/index.js'
 
-const PORT = process.env.PORT || 3333;
+dotenv.config()
 
-const app = express();
+const PORT = process.env.PORT || 3333
 
-app.use(morgan("dev"));
-app.use(helmet());
-app.use(express.json());
-app.use(cors());
-app.use("/api", router);
+const app = express()
 
-app.get("/", (request, response) => {
-  response.json({ message: "Hello World" });
-});
+app.use(morgan('dev'))
+app.use(helmet())
+app.use(express.json())
+app.use(cors())
+app.use('/api', router)
+
+app.get('/', (request, response) => {
+  response.json({ message: 'Hello World' })
+})
 
 app.listen(PORT, () => {
-  console.log(`Server Running PORT: ${PORT}`);
-});
+  console.log(`Server Running PORT: ${PORT}`)
+})

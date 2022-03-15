@@ -22,7 +22,7 @@ const schema = Joi.object({
 })
 
 class TicketController extends Controller {
-  constructor() {
+  constructor () {
     super({
       entity: 'ticket',
       validationSchema: schema,
@@ -39,7 +39,7 @@ class TicketController extends Controller {
     })
   }
 
-  store(request, response) {
+  store (request, response) {
     const { sessionId, userId } = request.body
 
     delete request.body.sessionId

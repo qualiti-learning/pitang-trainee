@@ -20,7 +20,7 @@ const schema = Joi.object({
 })
 
 class SessionController extends Controller {
-    constructor() {
+    constructor () {
         super({
             entity: 'session',
             validationSchema: schema,
@@ -39,7 +39,7 @@ class SessionController extends Controller {
         this.maxOfRows = 5
     }
 
-    generateSeats() {
+    generateSeats () {
         const seats = []
         const alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
 
@@ -67,7 +67,7 @@ class SessionController extends Controller {
         return seats
     }
 
-    store(request, response) {
+    store (request, response) {
         const movieId = request.body.movieId
 
         delete request.body.movieId
