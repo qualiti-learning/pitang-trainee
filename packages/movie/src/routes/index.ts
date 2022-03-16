@@ -1,14 +1,15 @@
 import { Router } from 'express'
+
 import MovieRouter from './MovieRouter'
-import UserRouter from './UserRouter'
-import TicketRouter from './TickerRouter'
 import SessionRouter from './SessionRouter'
+import TicketRouter from './TickerRouter'
+import UserRouter from './UserRouter'
 
 const router = Router()
 
 router.use(MovieRouter)
-router.use(UserRouter)
-router.use(TicketRouter)
 router.use(SessionRouter)
+router.use(TicketRouter)
+router.use(UserRouter)
 
 export default router
