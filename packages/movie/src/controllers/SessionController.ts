@@ -1,7 +1,7 @@
-/* eslint-disable indent */
-import prisma from '@prisma/client'
+import {Request, Response} from 'express'
+import * as prisma from '@prisma/client'
 import Joi from 'joi'
-import Controller from './Controller.js'
+import Controller from './Controller'
 
 const { Room, SeatStatus, SeatType } = prisma
 
@@ -20,6 +20,10 @@ const schema = Joi.object({
 })
 
 class SessionController extends Controller {
+    private excludeColumns: Array<{line: string, columns: number[]}>
+    private maxOfColumns: number;
+    private maxOfRows: number;
+
     constructor () {
         super({
             entity: 'session',
@@ -67,7 +71,7 @@ class SessionController extends Controller {
         return seats
     }
 
-    store (request, response) {
+   async store (request: Request, response: Response) {
         const movieId = request.body.movieId
 
         delete request.body.movieId

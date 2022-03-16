@@ -1,15 +1,30 @@
-import prisma from '../prismaClient.js'
+import {Request, Response} from 'express'
+import { PrismaClient } from '@prisma/client';
+import { ObjectSchema } from 'joi';
+import prisma from '../prismaClient'
+
+interface ControllerConstructor {
+  entity: string;
+  validationSchema?: ObjectSchema;
+  prismaOptions?: any
+}
 
 class Controller {
-  constructor ({ entity, validationSchema, prismaOptions }) {
+  private entity: string;
+  public prismaClient: PrismaClient;
+  public prismaOptions?: any;
+  public validationSchema?: ObjectSchema;
+  public prismaEntity: any;
+
+  constructor ({ entity, validationSchema, prismaOptions }: ControllerConstructor) {
     this.entity = entity
     this.validationSchema = validationSchema
     this.prismaOptions = prismaOptions
     this.prismaClient = prisma
-    this.prismaEntity = prisma[entity]
+    this.prismaEntity = (prisma as any)[entity]
   }
 
-  async store (request, response) {
+  async store (request: Request, response: Response): Promise<any> {
     const { body } = request
 
     if (this.validationSchema) {
@@ -34,7 +49,7 @@ class Controller {
     }
   }
 
-  async index (request, response) {
+  async index (request: Request, response: Response) {
     const registries = await this.prismaEntity.findMany(
       { include: this.prismaOptions?.include }
     )
@@ -42,7 +57,7 @@ class Controller {
     response.json(registries)
   }
 
-  async update (request, response) {
+  async update (request: Request, response: Response) {
     const { id } = request.params
     const { body } = request
 
@@ -54,7 +69,7 @@ class Controller {
     response.json(registry)
   }
 
-  async remove (request, response) {
+  async remove (request: Request, response: Response) {
     const { id } = request.params
 
     await this.prismaEntity.delete({ where: { id } })
@@ -62,7 +77,7 @@ class Controller {
     response.json({ message: `${this.entity.toUpperCase()} Removed` })
   }
 
-  async getOne (request, response) {
+  async getOne (request: Request, response: Response) {
     const { id } = request.params
 
     const registry = await this.prismaEntity.findUnique({ where: { id } })

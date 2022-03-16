@@ -1,6 +1,7 @@
-import prisma from '@prisma/client'
+import {Request, Response} from 'express'
+import * as prisma from '@prisma/client'
 import Joi from 'joi'
-import Controller from './Controller.js'
+import Controller from './Controller'
 
 const { TicketType } = prisma
 
@@ -39,7 +40,7 @@ class TicketController extends Controller {
     })
   }
 
-  store (request, response) {
+ async store (request: Request, response: Response) {
     const { sessionId, userId } = request.body
 
     delete request.body.sessionId

@@ -1,5 +1,6 @@
 import { Router } from 'express'
-import MovieController from '../controllers/MovieController.js'
+
+import MovieController from '../controllers/MovieController'
 
 const router = Router()
 
