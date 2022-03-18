@@ -1,0 +1,45 @@
+img {
+  border-radius: 50%;
+  height: 150px;
+  width: 150px;
+}
+
+header {
+  background-color: darkblue;
+  border: 1px solid violet;
+  margin: 10px;
+  padding: 10px;
+}
+
+h1 {
+  color: blueviolet;
+}
+
+h2 {
+  color: white;
+  font-size: 42px;
+}
+
+h3,
+h4,
+h5,
+h6 {
+  color: orange;
+}
+
+span {
+  color: green;
+  font-weight: bold;
+}
+
+#first-span {
+  color: hotpink;
+}
+
+.color-dark {
+  color: black;
+}
+
+.text-italic {
+  font-style: italic;
+}
