@@ -1,0 +1,28 @@
+body {
+    background-color: #dadada;
+}
+
+h1 {
+    font-size: 40px;
+}
+
+div.form-group input {
+    padding: 10px;
+}
+
+div.form-group button {
+    padding: 10px;
+    color: white;
+    font-weight: bold;
+    background-color: darkblue;
+    border-radius: 5px;
+}
+
+address {
+    margin-top: 20px;
+    font-size: 18px;
+}
+
+.container {
+    margin: 20px;
+}

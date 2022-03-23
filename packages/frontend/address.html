@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="address.css" />
+    <title>Address</title>
+</head>
+<script>
+    async function searchAddress() {
+        const cep = document.getElementById("cep");
+        const address = document.querySelector("address");
+
+        try {
+            const response = await fetch(`https://viacep.com.br/ws/${cep.value}/json/`);
+            const addressData = await response.json();
+
+            if (addressData.erro) {
+                throw new Error("CEP Invalido")
+            }
+
+            address.textContent =
+                `${addressData.logradouro}, ${addressData.complemento}, ${addressData.bairro} ${addressData.localidade}, ${addressData.uf}`
+        } catch (error) {
+            alert(error.message || "An unexpected error happened")
+        }
+    }
+</script>
+
+<body>
+    <div class="container">
+        <h1>Address Search</h1>
+
+        <div class="form-group">
+            <input id="cep" type="number" placeholder="Informe o CEP" />
+
+            <button onclick="searchAddress()">Search Address</button>
+        </div>
+
+        <address></address>
+    </div>
+</body>
+
+</html>
