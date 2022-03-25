@@ -1,0 +1,26 @@
+$IMAGE_SIZE: 300px;
+
+.App {
+  background-color: #fafafa;
+  display: grid;
+  gap: 50px;
+  grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
+  padding: 50px;
+
+  .launch {
+    padding: 20px;
+    background-color: #fff;
+    margin-right: 20px;
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    img {
+      height: $IMAGE_SIZE;
+      width: $IMAGE_SIZE;
+    }
+  }
+}
