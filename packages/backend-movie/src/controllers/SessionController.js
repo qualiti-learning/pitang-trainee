@@ -1,22 +1,50 @@
-import Prisma from '@prisma/client';
-import Joi from 'joi';
-import Controller from './Controller.js'
+import Prisma from "@prisma/client";
+import joi from "joi";
+import Controller from "./Controller.js";
 
 const { SessionRoom, SeatType, SeatStatus } = Prisma;
 
-const schema = Joi.object({
-  room: Joi.string().required().valid(...Object.values(SessionRoom)),
-  sessionDate: Joi.date().required(),
-  price: Joi.number().required().precision(6).positive(),
-  movieId: Joi.string().required()
-})
+const schema = joi.object({
+  room: joi
+    .string()
+    .required()
+    .valid(...Object.values(SessionRoom)),
+  sessionDate: joi.date().required(),
+  price: joi.number().required().precision(6).positive(),
+  movieId: joi.string().required(),
+});
 
 class SessionController extends Controller {
-  maxLines = 5
-  maxColumns = 5
-  alphabet = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
-    'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X',
-    'Y', 'Z']
+  maxLines = 5;
+  maxColumns = 5;
+  alphabet = [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "I",
+    "J",
+    "K",
+    "L",
+    "M",
+    "N",
+    "O",
+    "P",
+    "Q",
+    "R",
+    "S",
+    "T",
+    "U",
+    "V",
+    "W",
+    "X",
+    "Y",
+    "Z",
+  ];
 
   generateSeats() {
     const seats = [];
@@ -27,11 +55,13 @@ class SessionController extends Controller {
         const line = this.alphabet[y];
 
         seats.push({
-          column, line, disabled: false,
+          column,
+          line,
+          disabled: false,
           state: false,
           name: `${line}${column}`,
-          type: "STANDARD"
-        })
+          type: "STANDARD",
+        });
       }
     }
 
@@ -39,20 +69,20 @@ class SessionController extends Controller {
   }
 
   constructor() {
-    super('session', {
+    super("session", {
       findMany: {
-        include: { SessionSeats: true }
-      }
-    })
+        include: { SessionSeats: true },
+      },
+    });
   }
 
   store(request, response) {
     const { room, sessionDate, price, movieId } = request.body;
 
-    const validation = schema.validate({ room, sessionDate, price, movieId })
+    const validation = schema.validate({ room, sessionDate, price, movieId });
 
     if (validation.error) {
-      return response.status(400).json(validation)
+      return response.status(400).json(validation);
     }
 
     request.body = {
@@ -61,32 +91,32 @@ class SessionController extends Controller {
       sessionDate,
       SessionSeats: {
         createMany: {
-          data: this.generateSeats()
-        }
+          data: this.generateSeats(),
+        },
       },
-      movie: { connect: { id: movieId } }
-    }
+      movie: { connect: { id: movieId } },
+    };
 
-    super.store(request, response)
+    super.store(request, response);
   }
 
   update(request, response) {
     const { room, sessionDate, price, movieId } = request.body;
 
-    const validation = schema.validate({ room, sessionDate, price, movieId })
+    const validation = schema.validate({ room, sessionDate, price, movieId });
 
     if (validation.error) {
-      return response.status(400).json(validation)
+      return response.status(400).json(validation);
     }
 
     request.body = {
       room,
       price,
       sessionDate,
-      movie: { connect: { id: movieId } }
-    }
+      movie: { connect: { id: movieId } },
+    };
 
-    super.update(request, response)
+    super.update(request, response);
   }
 
   async updateSeat(request, response) {
@@ -100,21 +130,24 @@ class SessionController extends Controller {
     });
 
     const sessionSeat = {
-      disabled, state, type
-    }
+      disabled,
+      state,
+      type,
+    };
 
     const validate = seatSchema.validate(sessionSeat);
 
     if (validate.error) {
-      return response.status(401).json(validate.error)
+      return response.status(401).json(validate.error);
     }
 
-    const sessionSeatUpdated = await this.prismaClient.sessionSeats.update(
-      { data: sessionSeat, where: { id: seatId } }
-    )
+    const sessionSeatUpdated = await this.prismaClient.sessionSeats.update({
+      data: sessionSeat,
+      where: { id: seatId },
+    });
 
-    response.json(sessionSeatUpdated)
+    response.json(sessionSeatUpdated);
   }
 }
 
-export default SessionController
+export default SessionController;

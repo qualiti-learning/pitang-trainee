@@ -1,9 +1,14 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import Github from './pages/Github';
+import { ColorSchemeProvider, MantineProvider } from "@mantine/core";
+import React from "react";
+import ReactDOM from "react-dom";
+
+import Router from "./Router";
 
 ReactDOM.render(
-  <Github />,
-  document.getElementById('root')
+  <MantineProvider>
+    <ColorSchemeProvider>
+      <Router />
+    </ColorSchemeProvider>
+  </MantineProvider>,
+  document.getElementById("root")
 );
