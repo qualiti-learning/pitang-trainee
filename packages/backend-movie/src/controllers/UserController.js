@@ -1,11 +1,9 @@
-import Controller from './Controller.js'
+import Controller from "./Controller.js";
 
 class UserController extends Controller {
-  constructor () {
-    super('user')
+  constructor() {
+    super("user");
   }
-
-  // Implementar Login
 }
 
-export default UserController
+export default UserController;
