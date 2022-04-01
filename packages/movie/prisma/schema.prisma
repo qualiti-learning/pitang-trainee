@@ -94,11 +94,11 @@ model Ticket {
   type          TicketType @default(STANDARD)
   pucharseDate  DateTime?  @default(now())
   sessionId     String
-  userId        Int
+  userId        String
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
+  id        String   @id @default(uuid())
   role      UserRole @default(USER)
   password  String
   name      String

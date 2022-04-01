@@ -1,74 +1,80 @@
-import prisma from '../prismaClient.js'
+import prisma from "../prismaClient.js";
 
 class Controller {
-  constructor ({ entity, validationSchema, prismaOptions }) {
-    this.entity = entity
-    this.validationSchema = validationSchema
-    this.prismaOptions = prismaOptions
-    this.prismaClient = prisma
-    this.prismaEntity = prisma[entity]
+  constructor({ entity, validationSchema, prismaOptions }) {
+    this.entity = entity;
+    this.validationSchema = validationSchema;
+    this.prismaOptions = prismaOptions;
+    this.prismaClient = prisma;
+    this.prismaEntity = prisma[entity];
   }
 
-  async store (request, response) {
-    const { body } = request
+  async store(request, response) {
+    const { body } = request;
 
     if (this.validationSchema) {
-      const validation = this.validationSchema.validate(body, { abortEarly: false })
+      const validation = this.validationSchema.validate(body, {
+        abortEarly: false,
+      });
 
       if (validation.error) {
-        return response.status(400).json(validation.error.details)
+        return response.status(400).json(validation.error.details);
       }
     }
 
     try {
       const registry = await this.prismaEntity.create({
         include: this.prismaOptions?.include,
-        data: body
-      })
+        data: body,
+      });
 
-      response.json(registry)
+      response.json(registry);
     } catch (error) {
-      console.error(error)
+      console.error(error);
 
-      response.status(400).send({ message: `Failed insert: ${this.entity}` })
+      response.status(400).send({ message: `Failed insert: ${this.entity}` });
     }
   }
 
-  async index (request, response) {
-    const registries = await this.prismaEntity.findMany(
-      { include: this.prismaOptions?.include }
-    )
+  async index(request, response) {
+    const registries = await this.prismaEntity.findMany({
+      include: this.prismaOptions?.include,
+    });
 
-    response.json(registries)
+    response.json(registries);
   }
 
-  async update (request, response) {
-    const { id } = request.params
-    const { body } = request
+  async update(request, response) {
+    const { id } = request.params;
+    const { body } = request;
 
     const registry = await this.prismaEntity.update({
       where: { id },
-      data: body
-    })
+      data: body,
+    });
 
-    response.json(registry)
+    response.json(registry);
   }
 
-  async remove (request, response) {
-    const { id } = request.params
+  async remove(request, response) {
+    try {
+      const { id } = request.params;
 
-    await this.prismaEntity.delete({ where: { id } })
+      await this.prismaEntity.delete({ where: { id } });
 
-    response.json({ message: `${this.entity.toUpperCase()} Removed` })
+      response.json({ message: `${this.entity.toUpperCase()} Removed` });
+    } catch (error) {
+      response.status(404).json({ message: error.message });
+    }
   }
 
-  async getOne (request, response) {
-    const { id } = request.params
+  async getOne(request, response) {
+    const { id } = request.params;
 
-    const registry = await this.prismaEntity.findUnique({ where: { id } })
+    const registry = await this.prismaEntity.findUnique({ where: { id } });
 
-    response.json(registry)
+    response.json(registry);
   }
 }
 
-export default Controller
+export default Controller;
