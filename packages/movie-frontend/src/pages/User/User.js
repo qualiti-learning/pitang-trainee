@@ -9,21 +9,11 @@ import {
 } from "@mantine/core";
 import { DatePicker } from "@mantine/dates";
 import axios from "../../services/api";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { showNotification } from "@mantine/notifications";
 
-const User = () => {
-  const navigate = useNavigate();
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    password: "",
-    role: "",
-    birthDate: new Date(1990, 0, 1),
-    reviewer: false,
-  });
-
+const UserForm = ({ form, setForm }) => {
   const onChange = (event) => {
     const {
       target: { name, type, checked, value },
@@ -35,30 +25,8 @@ const User = () => {
     });
   };
 
-  const onSubmit = async () => {
-    const user = {
-      ...form,
-      birthDate: form.birthDate.toISOString(),
-    };
-
-    try {
-      await axios.post("/user", user);
-
-      showNotification({
-        message: "User created with success",
-        title: "Success",
-      });
-
-      navigate("/user");
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   return (
-    <div>
-      <Title mb={16}>Create User</Title>
-
+    <>
       <InputWrapper
         mb={8}
         id="name"
@@ -116,11 +84,71 @@ const User = () => {
         mt={8}
         name="reviewer"
         onChange={onChange}
-        value={form.reviewer}
+        checked={form.reviewer}
       />
+    </>
+  );
+};
+
+const User = () => {
+  const navigate = useNavigate();
+  const { userId } = useParams();
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    password: "",
+    role: "",
+    birthDate: new Date(1990, 0, 1),
+    reviewer: false,
+  });
+
+  const isNewUser = userId === "new";
+
+  useEffect(() => {
+    if (!isNewUser) {
+      axios.get(`/user/${userId}`).then((response) =>
+        setForm({
+          ...response.data,
+          birthDate: new Date(response.data.birthDate),
+        })
+      );
+    }
+  }, [isNewUser, userId]);
+
+  const onSubmit = async () => {
+    const user = {
+      ...form,
+      birthDate: form.birthDate.toISOString(),
+    };
+
+    try {
+      if (isNewUser) {
+        await axios.post("/user", user);
+      } else {
+        await axios.put(`/user/${userId}`, user);
+      }
+
+      showNotification({
+        message: `User ${isNewUser ? "created" : "updated"} with success`,
+        title: "Success",
+      });
+
+      navigate("/user");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const pageTitle = `${isNewUser ? "Create" : "Update"} User`;
+
+  return (
+    <div>
+      <Title mb={16}>{pageTitle}</Title>
+
+      <UserForm form={form} setForm={setForm} />
 
       <Button mt={16} onClick={onSubmit}>
-        Create User
+        {pageTitle}
       </Button>
     </div>
   );

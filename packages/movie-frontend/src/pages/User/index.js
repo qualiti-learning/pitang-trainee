@@ -1,6 +1,6 @@
 import { Badge, Button, Space, Table, Title } from "@mantine/core";
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Pencil, Trash } from "tabler-icons-react";
 import { showNotification } from "@mantine/notifications";
 

@@ -71,7 +71,7 @@ class SessionController extends Controller {
   constructor() {
     super("session", {
       findMany: {
-        include: { SessionSeats: true },
+        include: { SessionSeats: true, movie: true },
       },
     });
   }
