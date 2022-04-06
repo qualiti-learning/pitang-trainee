@@ -71,9 +71,17 @@ class Controller {
   async getOne(request, response) {
     const { id } = request.params;
 
-    const registry = await this.prismaEntity.findUnique({ where: { id } });
+    try {
+      const registry = await this.prismaEntity.findUnique({ where: { id } });
 
-    response.json(registry);
+      if (!registry) {
+        throw new Error(`${this.entity} not found`);
+      }
+
+      response.json(registry);
+    } catch (error) {
+      response.status(404).json({ message: error.message });
+    }
   }
 }
 
