@@ -86,9 +86,9 @@ class Controller {
 
       response.json(registry);
     } catch (error) {
-      logger.error(`Registry with id: ${id} not found`);
+      logger.error(`${error.message}`);
 
-      response.status(404).json({ message: "Registry not found" });
+      response.status(404).json({ message: error.message });
     }
   }
 }

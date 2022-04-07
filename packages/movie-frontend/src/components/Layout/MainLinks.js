@@ -4,6 +4,7 @@ import {
   AlertCircle,
   Messages,
   Database,
+  Ticket,
 } from "tabler-icons-react";
 import { ThemeIcon, UnstyledButton, Group, Text } from "@mantine/core";
 import { useNavigate } from "react-router-dom";
@@ -59,6 +60,12 @@ const routes = [
     color: "violet",
     label: "Session",
     path: "/session",
+  },
+  {
+    icon: <Ticket size={16} />,
+    color: "yellow",
+    label: "Ticket",
+    path: "/ticket",
   },
   {
     icon: <Database size={16} />,

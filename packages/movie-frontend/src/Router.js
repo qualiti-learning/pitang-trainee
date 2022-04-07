@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import Movie from "./pages/Movie";
 import Session from "./pages/Session";
 import Users from "./pages/User";
+import Ticket from "./pages/Ticket";
 import User from "./pages/User/User";
 
 const Router = () => {
@@ -15,9 +16,9 @@ const Router = () => {
           <Route element={<Home />} index />
           <Route path="/movie" element={<Movie />} />
           <Route path="/session" element={<Session />} />
+          <Route path="/ticket" element={<Ticket />} />
           <Route path="/user" element={<Outlet />}>
             <Route element={<Users />} index />
-
             <Route element={<User />} path=":userId" />
           </Route>
         </Route>

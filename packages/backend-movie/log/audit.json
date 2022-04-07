@@ -9,6 +9,11 @@
             "date": 1649111053135,
             "name": "log/app-2022-04-04.log",
             "hash": "4dc2d2ca5596204c7c7c18385fee15ad"
+        },
+        {
+            "date": 1649285099235,
+            "name": "log/app-2022-04-06.log",
+            "hash": "18a061cdba64bdac3c97bea3ca98c879"
         }
     ],
     "hashType": "md5"

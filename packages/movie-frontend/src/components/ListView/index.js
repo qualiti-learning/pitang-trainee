@@ -1,17 +1,24 @@
 import { Button, Text, Title, Space } from "@mantine/core";
 import { Pencil, Trash } from "tabler-icons-react";
 import { showNotification } from "@mantine/notifications";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useModals } from "@mantine/modals";
 import { useNavigate } from "react-router-dom";
 
 import Table from "../Table";
 import axios from "../../services/api";
 
-const ListView = ({ columns, endpoint, title, onClickNew }) => {
+const ListView = ({
+  columns,
+  endpoint,
+  title,
+  refetchTimestamp,
+  openContentModal,
+}) => {
   const modals = useModals();
   const [rows, setRows] = useState([]);
   const navigate = useNavigate();
+
   const titleLowerCase = title.toLowerCase();
 
   const onRemove = async ({ id }) => {
@@ -26,7 +33,6 @@ const ListView = ({ columns, endpoint, title, onClickNew }) => {
 
         setRows(rows.filter((row) => row.id !== id));
       } catch (error) {
-        // eslint-disable-next-line no-undef
         showNotification({
           color: "red",
           message: error.response.data.message,
@@ -53,19 +59,25 @@ const ListView = ({ columns, endpoint, title, onClickNew }) => {
     });
   };
 
-  useEffect(() => {
+  const fetchData = useCallback(() => {
     axios.get(endpoint).then((response) => setRows(response.data));
   }, [endpoint]);
 
+  useEffect(() => {
+    fetchData();
+  }, [fetchData, endpoint, refetchTimestamp]);
+
+  const isContentModalFunction = typeof openContentModal === "function";
+
   return (
     <>
-      <Title>{title}</Title>
+      <Title>{`${title} (${rows.length})`}</Title>
 
       <Button
         mt={12}
         onClick={() => {
-          if (typeof onClickNew === "function") {
-            return onClickNew();
+          if (isContentModalFunction) {
+            return openContentModal();
           }
 
           navigate("new");
@@ -82,7 +94,13 @@ const ListView = ({ columns, endpoint, title, onClickNew }) => {
             color: "white",
             icon: <Pencil />,
             name: "Edit",
-            onClick: ({ id }) => navigate(`${id}`),
+            onClick: (data) => {
+              if (isContentModalFunction) {
+                return openContentModal(data);
+              }
+
+              navigate(`${data.id}`);
+            },
           },
           {
             color: "red",

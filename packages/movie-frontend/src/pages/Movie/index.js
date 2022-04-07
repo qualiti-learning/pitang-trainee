@@ -1,36 +1,50 @@
-import { Button } from "@mantine/core";
 import { useModals } from "@mantine/modals";
+import { showNotification } from "@mantine/notifications";
 
 import ListView from "../../components/ListView";
 import MovieForm from "./Movie";
-import { useForm } from "@mantine/form";
+
+import axios from "../../services/api";
+import { useState } from "react";
 
 const Movie = () => {
-  const form = useForm({
-    initialValues: {
-      name: "",
-      description: "",
-      classification: "",
-      duration: "",
-    },
-  });
-
-  console.log({ form });
-
+  const [lastMovieTimestamp, setLastMovieTimestamp] = useState();
   const modals = useModals();
 
-  const openContentModal = () => {
+  const onSubmit = (modalId) => async (form) => {
+    try {
+      if (form.id) {
+        delete form.Session;
+
+        await axios.put(`/movie/${form.id}`, form);
+      } else {
+        await axios.post("/movie", form);
+      }
+
+      showNotification({
+        title: "Success",
+        message: `Movie ${form.id ? "Updated" : "Created"} with Success`,
+        color: "green",
+      });
+
+      setLastMovieTimestamp(new Date().getTime());
+
+      modals.closeModal(modalId);
+    } catch (error) {
+      showNotification({
+        title: "Error",
+        message: error.response.data.message,
+        color: "red",
+      });
+    }
+  };
+
+  const openContentModal = (movie) => {
     const id = modals.openModal({
-      title: "Create Movie",
+      title: `${movie?.id ? "Update" : "Create"} Movie`,
       size: "xl",
       children: (
-        <>
-          <MovieForm form={form} />
-
-          <Button fullWidth onClick={() => modals.closeModal(id)}>
-            Submit
-          </Button>
-        </>
+        <MovieForm movie={movie} onSubmit={(form) => onSubmit(id)(form)} />
       ),
     });
   };
@@ -61,7 +75,8 @@ const Movie = () => {
       ]}
       endpoint="/movie"
       title="Movie"
-      onClickNew={openContentModal}
+      openContentModal={openContentModal}
+      refetchTimestamp={lastMovieTimestamp}
     />
   );
 };

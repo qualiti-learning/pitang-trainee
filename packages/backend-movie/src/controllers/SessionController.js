@@ -58,7 +58,7 @@ class SessionController extends Controller {
           column,
           line,
           disabled: false,
-          state: false,
+          state: "AVAILABLE",
           name: `${line}${column}`,
           type: "STANDARD",
         });
