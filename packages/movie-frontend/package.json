@@ -6,6 +6,7 @@
     "@mantine/core": "^4.1.0",
     "@mantine/dates": "^4.1.2",
     "@mantine/hooks": "^4.1.0",
+    "@mantine/modals": "^4.1.2",
     "@mantine/notifications": "^4.1.0",
     "@testing-library/jest-dom": "^5.16.3",
     "@testing-library/react": "^12.1.4",
