@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Table Render Table 1`] = `
+<DocumentFragment>
+  <table
+    class="mantine-Table-root __mantine-ref-hover mantine-Table-hover mantine-clz1g3"
+  >
+    <thead>
+      <tr />
+    </thead>
+    <tbody />
+  </table>
+</DocumentFragment>
+`;
