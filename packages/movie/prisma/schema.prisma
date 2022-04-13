@@ -59,6 +59,7 @@ model SessionSeats {
   status    SeatStatus @default(AVAILABLE)
   Session   Session?   @relation(fields: [sessionId], references: [id])
   sessionId String?
+  Ticket    Ticket[]
 }
 
 model Session {
@@ -86,15 +87,18 @@ model Movie {
 }
 
 model Ticket {
-  id            String     @id @default(uuid())
-  session       Session    @relation(fields: [sessionId], references: [id])
-  user          User       @relation(fields: [userId], references: [id])
-  price         Decimal    @db.Decimal(10, 2)
-  paymentStatus Boolean    @default(false)
-  type          TicketType @default(STANDARD)
-  pucharseDate  DateTime?  @default(now())
-  sessionId     String
-  userId        String
+  id            String       @id @default(uuid())
+  session       Session      @relation(fields: [sessionId], references: [id])
+  user          User         @relation(fields: [userId], references: [id])
+  seat          SessionSeats @relation(fields: [sessionSeatsId], references: [id])
+  price         Decimal      @db.Decimal(10, 2)
+  paymentStatus Boolean      @default(false)
+  type          TicketType   @default(STANDARD)
+  pucharseDate  DateTime?    @default(now())
+
+  sessionId      String
+  userId         String
+  sessionSeatsId String
 }
 
 model User {

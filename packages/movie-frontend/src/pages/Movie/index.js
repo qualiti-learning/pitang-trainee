@@ -18,12 +18,18 @@ const Movie = () => {
   };
 
   const onSubmit = async (form) => {
+    const { id, ...movie } = form;
+
     try {
-      await axios.post("/movie", form);
+      if (id) {
+        await axios.put(`/movie/${id}`, movie);
+      } else {
+        await axios.post("/movie", movie);
+      }
 
       showNotification({
         color: "green",
-        message: "Movie created with success",
+        message: `Movie ${id ? "updated" : "created"} with success`,
         title: "Success",
       });
 

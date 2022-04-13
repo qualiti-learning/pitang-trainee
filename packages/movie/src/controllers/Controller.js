@@ -39,6 +39,7 @@ class Controller {
   async index(request, response) {
     const registries = await this.prismaEntity.findMany({
       include: this.prismaOptions?.include,
+      take: 20,
     });
 
     response.json(registries);
